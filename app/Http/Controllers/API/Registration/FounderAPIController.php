@@ -14,11 +14,11 @@ class FounderAPIController extends Controller
 {
     public function register(StoreFounderRequest $request)
     {
-        $founder = Founder::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make(str_random(16)),
-        ]);
+        $validatedData = $request->validated();
+
+        $validatedData['password'] = Hash::make(str_random(16));
+
+        $founder = Founder::create($validatedData);
 
         $founderDetail = FounderDetail::create([
             'founder_id' => $founder->id,
@@ -27,7 +27,7 @@ class FounderAPIController extends Controller
             'financial_level' => $request->input('financial_level'),
             'focus_area' => $request->input('focus_area'),
             'challenges' => $request->input('challenges'),
-            'funding_status' => $request->input('seeking_funding'),
+            'funding_status' => $request->input('funding_status'),
             'partnership' => $request->input('partnership'),
             'community_support' => $request->input('community_support'),
         ]);
