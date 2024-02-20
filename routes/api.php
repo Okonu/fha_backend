@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register-founder', [FounderAPIController::class, 'founderRegistration']);
 Route::post('/login', [FounderLoginAPIController::class, 'authenticate']);
-// Route::post('/reset-password', [FounderLoginAPIController::class, 'resetPassword']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [FounderLoginAPIController::class, 'logout']);
     Route::post('/reset-password', [FounderLoginAPIController::class, 'resetPassword']);
