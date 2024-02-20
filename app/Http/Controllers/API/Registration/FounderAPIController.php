@@ -9,14 +9,14 @@ use App\Models\Registration\FounderDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class FounderAPIController extends Controller
 {
-    public function register(StoreFounderRequest $request)
+    public function founderRegistration(StoreFounderRequest $request)
     {
         $validatedData = $request->validated();
-
-        $validatedData['password'] = Hash::make(str_random(16));
 
         $founder = Founder::create($validatedData);
 
@@ -37,6 +37,6 @@ class FounderAPIController extends Controller
             'founder' => $founder,
             'founderDetail' => $founderDetail,
         ]);
-
     }
+
 }
