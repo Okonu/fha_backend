@@ -11,8 +11,7 @@ class RegistrationEmailServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(RegistrationEmailService::class, function ($app) {
-            $mailManager = $app->make(MailManager::class);
-            return new RegistrationEmailService($mailManager);
+            return new RegistrationEmailService();
         });
     }
 

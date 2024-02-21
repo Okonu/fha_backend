@@ -30,7 +30,6 @@ class StoreFounderRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|string|max:255|unique:founders,email',
-            // 'password' => 'nullable|string|min:8|confirmed',
             'company_name' => 'required|string|max:255',
             'business_type' => ['required', 'string', new Enum(BusinessType::class)],
             'financial_level' => ['required', 'string', new Enum(FinancialLevel::class)],

@@ -4,18 +4,13 @@ namespace App\Services;
 
 use App\Mail\Registration\RegistrationDetailsEmail;
 use Illuminate\Mail\MailManager;
+use Illuminate\Support\Facades\Mail;
 
 class RegistrationEmailService
 {
-    protected $mailManager;
-
-    public function __construct(MailManager $mailManager)
+    public function sendEmail($to, $subject, $content)
     {
-        $this->mailManager = $mailManager;
-    }
-
-    public function sendEmail($to, $subject, $message)
-    {
-        $this->mailManager->send(new RegistrationDetailsEmail($to, $subject, $message));
+        $mailable = new RegistrationDetailsEmail($subject, $content);
+        Mail::to($to)->send($mailable);
     }
 }

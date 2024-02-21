@@ -34,11 +34,11 @@ class FounderAPIController extends Controller
             'community_support' => $request->input('community_support'),
         ]);
 
-        $message = "Registration successful. PLease check the following steps";
+        $content = "Registration successful. PLease check the following steps";
         $this->registrationEmailService->sendEmail(
             $request->input('email'),
             'Registration complete',
-            $message
+            $content
         );
 
         return response()->json([
