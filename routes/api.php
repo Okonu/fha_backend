@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Login\FounderLoginAPIController;
 use App\Http\Controllers\API\Registration\FounderAPIController;
+use App\Http\Controllers\API\Registration\InvestorAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//founder routes
 Route::post('/register-founder', [FounderAPIController::class, 'founderRegistration']);
 Route::post('/login', [FounderLoginAPIController::class, 'authenticate']);
 
@@ -27,3 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [FounderLoginAPIController::class, 'logout']);
     Route::post('/reset-password', [FounderLoginAPIController::class, 'resetPassword']);
 });
+
+// investor routes
+Route::post('/register-investor', [InvestorAPIController::class, 'investorRegistration']);
