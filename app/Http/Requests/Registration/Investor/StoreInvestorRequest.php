@@ -29,11 +29,12 @@ class StoreInvestorRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|string|max:255|unique:investors,email',
-            'enterprise_level' => ['required', EnterpriseLevel::class],
-            'co_investing' => ['required', CoInvesting::class],
-            'focus_area' => ['required', InvestorFocusArea::class],
-            'impact' => ['required', SocialEnvironmentaImpact::class],
-            'viability' => ['required', ViabilityCriteria::class],
+            'enterprise_level' => 'required|string|max:255',
+            'co_investing' => 'required|string|max:255',
+            'convenient_investing' => 'required|string|max:255',
+            'focus_area' => 'required|string|max:255',
+            'impact' => 'required|string|max:255',
+            'viability' =>  'required|string|max:255',
             'expectation' => 'required|string|max:255',
             'concern' => 'required|string|max:255',
         ];

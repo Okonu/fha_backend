@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('investors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('password')->nullable();
+            $table->string('email')->unique();
+            $table->string('password')->nullable()->unique();
             $table->timestamps();
         });
     }
