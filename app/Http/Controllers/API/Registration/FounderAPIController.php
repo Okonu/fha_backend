@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Registration\Founder\StoreFounderRequest;
 use App\Models\Registration\Founder;
 use App\Models\Registration\FounderDetail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
+use App\Services\RegistrationEmailService;
 
 class FounderAPIController extends Controller
 {
+    protected $registrationEmailService;
+
+    public function __construct(RegistrationEmailService $registrationEmailService)
+    {
+        $this->registrationEmailService = $registrationEmailService;
+    }
     public function founderRegistration(StoreFounderRequest $request)
     {
         $validatedData = $request->validated();
@@ -32,8 +34,15 @@ class FounderAPIController extends Controller
             'community_support' => $request->input('community_support'),
         ]);
 
+        $message = "Registration successful. PLease check the following steps";
+        $this->registrationEmailService->sendEmail(
+            $request->input('email'),
+            'Registration complete',
+            $message
+        );
+
         return response()->json([
-            'message' => 'Registration complete. Please check your email to set your password.',
+            'message' => 'Registration complete. Please check your email on the next steps.',
             'founder' => $founder,
             'founderDetail' => $founderDetail,
         ]);
