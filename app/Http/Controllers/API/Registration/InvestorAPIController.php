@@ -6,10 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Registration\Investor\StoreInvestorRequest;
 use App\Models\Registration\Investor;
 use App\Models\Registration\InvestorDetail;
-use Illuminate\Http\Request;
+use App\Services\RegistrationEmailService;
 
 class InvestorAPIController extends Controller
 {
+    protected $registrationEmailService;
+
+    public function __construct(RegistrationEmailService $registrationEmailService)
+    {
+        $this->registrationEmailService = $registrationEmailService;
+    }
+
+    private function sendRegistrationConfirmationEmail($email, $subject, $content)
+    {
+        $this->registrationEmailService->sendEmail($email, $subject, $content);
+    }
+
     public function investorRegistration(StoreInvestorRequest $request)
     {
         $validatedData = $request->validated();
@@ -18,8 +30,7 @@ class InvestorAPIController extends Controller
 
         if ($existingEmail) {
             return response()->json([
-                'message' => 'The email is already in use.',
-                'error' => 'email_already_in_use',
+                'message' => 'The email is already in use.'
             ],  409);
         }
 
@@ -36,6 +47,13 @@ class InvestorAPIController extends Controller
             'expectation' => $request->input('expectation'),
             'concern' => $request->input('concern'),
         ]);
+
+        $content = "Thank you fore registering as an investor. PLease check the following steps";
+        $this->sendRegistrationConfirmationEmail(
+            $request->input('email'),
+            'Registration Successful',
+            $content
+        );
 
         return response()->json([
             'message' => 'Registration was successful',

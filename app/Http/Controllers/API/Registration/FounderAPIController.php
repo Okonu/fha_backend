@@ -20,6 +20,14 @@ class FounderAPIController extends Controller
     {
         $validatedData = $request->validated();
 
+        $existingEmail = Founder::where('email', $validatedData['email'])->first();
+
+        if($existingEmail) {
+            return response()->json([
+                'message' => 'This email is already in use.'
+            ], 409);
+        }
+
         $founder = Founder::create($validatedData);
 
         $founderDetail = FounderDetail::create([
@@ -34,7 +42,7 @@ class FounderAPIController extends Controller
             'community_support' => $request->input('community_support'),
         ]);
 
-        $content = "Registration successful. PLease check the following steps";
+        $content = "Thank you for registering as a Founder. PLease check the following steps";
         $this->registrationEmailService->sendEmail(
             $request->input('email'),
             'Registration complete',
