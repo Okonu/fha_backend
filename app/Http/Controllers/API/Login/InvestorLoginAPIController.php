@@ -46,7 +46,7 @@ class InvestorLoginAPIController extends Controller
         return response()->json(['message' => 'OTP sent successfully']);
     }
 
-    public function authenticateWithOtp(Request $request)
+    public function authenticate(Request $request)
     {
         $request->validate([
             'email' => 'required|email',

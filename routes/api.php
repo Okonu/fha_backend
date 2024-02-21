@@ -34,3 +34,5 @@ Route::middleware('auth:sanctum')->group(function () {
 // investor routes
 Route::post('/register-investor', [InvestorAPIController::class, 'investorRegistration']);
 Route::post('/investor-login', [InvestorLoginAPIController::class, 'authenticate']);
+Route::post('/request-otp', [InvestorLoginAPIController::class, 'requestOtp']);
+Route::post('/investor-logout', [InvestorLoginAPIController::class, 'logout'])->name('logout');
