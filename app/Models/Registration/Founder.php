@@ -12,7 +12,7 @@ class Founder extends Authenticatable
     use HasFactory;
     use HasApiTokens, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'otp'];
 
     public function detail()
     {

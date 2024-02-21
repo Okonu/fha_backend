@@ -4,37 +4,65 @@ namespace App\Http\Controllers\API\Login;
 
 use App\Http\Controllers\Controller;
 use App\Models\Registration\Founder;
+use App\Services\OtpMailService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
 
 class FounderLoginAPIController extends Controller
 {
-    public function authenticate(Request $request)
+    protected $otpMailService;
+
+    public function __construct(OtpMailService $otpMailService)
+    {
+        $this->otpMailService = $otpMailService;
+    }
+
+    private function sendOtpEmail($email, $otp)
+    {
+        $subject = 'Your OTP for Login';
+        $content = "Your OTP for login is: {$otp}";
+        $this->otpMailService->sendEmail($email, $subject, $content);
+    }
+
+    public function requestOtp(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
         ]);
 
         $founder = Founder::where('email', $request->email)->first();
 
         if (!$founder) {
-            return response()->json(['message' => 'Please send an application first.'],  401);
+            return response()->json(['message' => 'Please send an application first.'],   401);
         }
 
-        return $this->attemptLogin($founder, $request->password);
+        $otp = rand(100000,  999999);
+        $founder->update([
+            'otp' => $otp,
+            'otp_expires_at' => now()->addMinutes(5),
+        ]);
+
+        $this->sendOtpEmail($request->email, $otp);
+
+        return response()->json(['message' => 'OTP sent successfully']);
     }
 
-    private function attemptLogin(Founder $founder, string $password)
+    public function authenticate(Request $request)
     {
-        if ($founder->password === null) {
-            $founder->update(['password' => Hash::make($password)]);
-            return $this->loginFounder($founder, $password);
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|numeric',
+        ]);
+
+        $founder = Founder::where('email', $request->email)->first();
+
+        if (!$founder) {
+            return response()->json(['message' => 'Please send an application first.'],   401);
         }
 
-        if (Hash::check($password, $founder->password)) {
+        if ($founder->otp === $request->otp && now()->lessThan($founder->otp_expires_at)) {
             $token = $founder->createToken('founder-api-token')->plainTextToken;
+            $founder->update(['otp' => null]);
             return response()->json([
                 'message' => 'Logged in successfully.',
                 'token' => $token,
@@ -42,25 +70,7 @@ class FounderLoginAPIController extends Controller
             ],   200);
         }
 
-        throw ValidationException::withMessages([
-            'password' => ['The provided password is incorrect.'],
-        ]);
-    }
-
-    private function loginFounder(Founder $founder, string $password)
-    {
-        if (Hash::check($password, $founder->password)) {
-            $token = $founder->createToken('founder-api-token')->plainTextToken;
-            return response()->json([
-                'message' => 'Logged in successfully.',
-                'token' => $token,
-                'token_type' => 'Bearer',
-            ],   200);
-        }
-
-        throw ValidationException::withMessages([
-            'password' => ['The provided password is incorrect.'],
-        ]);
+        return response()->json(['message' => 'Invalid OTP or OTP has expired.'],   401);
     }
 
     public function logout(Request $request)
@@ -68,9 +78,8 @@ class FounderLoginAPIController extends Controller
         $user = $request->user();
         if ($user) {
             $user->currentAccessToken()->delete();
-            return response()->json(['message' => 'Logged out successfully.'],  200);
+            return response()->json(['message' => 'Logged out successfully.'],   200);
         }
-        return response()->json(['message' => 'No authenticated user found.'],  401);
+        return response()->json(['message' => 'No authenticated user found.'],   401);
     }
-
 }
