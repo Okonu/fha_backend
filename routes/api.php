@@ -25,14 +25,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //founder routes
 Route::post('/register-founder', [FounderAPIController::class, 'founderRegistration']);
 Route::post('/founder-login', [FounderLoginAPIController::class, 'authenticate']);
+Route::post('/founder-request-otp', [FounderLoginAPIController::class, 'requestOtp']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [FounderLoginAPIController::class, 'logout']);
-    Route::post('/reset-password', [FounderLoginAPIController::class, 'resetPassword']);
 });
 
 // investor routes
 Route::post('/register-investor', [InvestorAPIController::class, 'investorRegistration']);
 Route::post('/investor-login', [InvestorLoginAPIController::class, 'authenticate']);
-Route::post('/request-otp', [InvestorLoginAPIController::class, 'requestOtp']);
-Route::post('/investor-logout', [InvestorLoginAPIController::class, 'logout'])->name('logout');
+Route::post('/investor-request-otp', [InvestorLoginAPIController::class, 'requestOtp']);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/investor-logout', [InvestorLoginAPIController::class, 'logout']);
+});
