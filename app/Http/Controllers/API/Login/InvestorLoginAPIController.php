@@ -13,16 +13,16 @@ class InvestorLoginAPIController extends Controller
 
     public function __construct(OtpMailService $otpMailService)
     {
-        $this->$otpMailService = $otpMailService;
+        $this->otpMailService = $otpMailService;
     }
 
-    public function sendOtpEmail($email, $otp)
+    private function sendOtpEmail($email, $otp)
     {
         $subject = 'Your OTP for Login';
-        $content = 'Your OTP for login is: {$otp}';
+        $content = "Your OTP for login is: {$otp}";
         $this->otpMailService->sendEmail($email, $subject, $content);
     }
-
+    
     public function requestOtp(Request $request)
     {
         $request->validate([
@@ -61,6 +61,9 @@ class InvestorLoginAPIController extends Controller
 
         if ($investor->otp === $request->otp && now()->lessThan($investor->otp_expires_at)) {
             $token = $investor->createToken('investor-api-token')->plainTextToken;
+
+            $investor->update(['otp' => null]);
+            
             return response()->json([
                 'message' => 'Logged in successfully',
                 'token' => $token,
