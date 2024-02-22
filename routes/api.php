@@ -4,6 +4,9 @@ use App\Http\Controllers\API\Login\FounderLoginAPIController;
 use App\Http\Controllers\API\Login\InvestorLoginAPIController;
 use App\Http\Controllers\API\Registration\FounderAPIController;
 use App\Http\Controllers\API\Registration\InvestorAPIController;
+use App\Http\Controllers\API\FoundersAPIController;
+use App\Http\Controllers\API\InvestorsAPIController;
+use App\Http\Controllers\API\EnumAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +41,22 @@ Route::post('/investor-request-otp', [InvestorLoginAPIController::class, 'reques
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/investor-logout', [InvestorLoginAPIController::class, 'logout']);
+});
+
+Route::get('/investors', [InvestorsAPIController::class, 'index']);
+Route::get('/founders', [FoundersAPIController::class, 'index']);
+
+//enum routes
+Route::prefix('enums')->group(function () {
+    Route::get('/focus-areas', [EnumAPIController::class, 'getFocusAreas']);
+    Route::get('/social-env-impacts', [EnumAPIController::class, 'getSocialEnvironmentImpact']);
+    Route::get('/investor-focus-areas', [EnumAPIController::class, 'getInvestorFocusAreas']);
+    Route::get('/viability-criterias', [EnumAPIController::class, 'getViabilityCriteria']);
+    Route::get('/business-types', [EnumAPIController::class, 'getBusinessType']);
+    Route::get('/funding-status', [EnumAPIController::class, 'getFundingStatus']);
+    Route::get('/partnering-options', [EnumAPIController::class, 'getPartneringOptions']);
+    Route::get('/financial-levels', [EnumAPIController::class, 'getFinancialLevels']);
+    Route::get('/co-investings', [EnumAPIController::class, 'getCoInvestings']);
+    Route::get('/convenient-investments', [EnumAPIController::class, 'getConvenientInvestments']);
+    Route::get('/enterprise-levels', [EnumAPIController::class, 'getEnterpriseLevels']);
 });
