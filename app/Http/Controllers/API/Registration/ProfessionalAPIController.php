@@ -45,12 +45,12 @@ class ProfessionalAPIController extends Controller
             'goals' => $request->input('goals'),
         ]);
 
-        // $content = "Thank you for registering as a Professional. PLease check the following steps";
-        // $this->registrationEmailService->sendEmail(
-        //     $request->input('email'),
-        //     'Registration complete',
-        //     $content
-        // );
+        $content = "Thank you for registering as a Professional. PLease check the following steps";
+        $this->registrationEmailService->sendEmail(
+            $request->input('email'),
+            'Registration complete',
+            $content
+        );
 
         return response()->json([
             'message' => 'Registration complete. PLease check your email for the next steps.',
