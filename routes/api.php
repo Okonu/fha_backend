@@ -67,4 +67,6 @@ Route::prefix('enums')->group(function () {
     Route::get('/collaboration-types', [EnumAPIController::class, 'getCollaborationTypes']);
     Route::get('/aspirations', [EnumAPIController::class, 'getAspirations']);
     Route::get('/goals', [EnumAPIController::class, 'getGoals']);
+    Route::get('/motivations', [EnumAPIController::class, 'getMotivation']);
+    Route::get('/enhancing-credibility', [EnumAPIController::class, 'getEnhancingCredibility']);
 });
