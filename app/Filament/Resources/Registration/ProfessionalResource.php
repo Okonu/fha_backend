@@ -45,7 +45,6 @@ class ProfessionalResource extends Resource
                     ->label('Convenient Investing')
                     ->searchable(),
                 TextColumn::make('skills')
-                    ->label('Skills')
                     ->searchable(),
                 TextColumn::make('professionalDetail.benefits')
                     ->label('Benefits')
