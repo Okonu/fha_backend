@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Registration\InvestorAPIController;
 use App\Http\Controllers\API\FoundersAPIController;
 use App\Http\Controllers\API\InvestorsAPIController;
 use App\Http\Controllers\API\EnumAPIController;
+use App\Http\Controllers\API\Registration\ProfessionalAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //founder routes
+Route::get('/founders', [FoundersAPIController::class, 'index']);
 Route::post('/register-founder', [FounderAPIController::class, 'founderRegistration']);
 Route::post('/founder-login', [FounderLoginAPIController::class, 'authenticate']);
 Route::post('/founder-request-otp', [FounderLoginAPIController::class, 'requestOtp']);
@@ -35,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // investor routes
+Route::get('/investors', [InvestorsAPIController::class, 'index']);
 Route::post('/register-investor', [InvestorAPIController::class, 'investorRegistration']);
 Route::post('/investor-login', [InvestorLoginAPIController::class, 'authenticate']);
 Route::post('/investor-request-otp', [InvestorLoginAPIController::class, 'requestOtp']);
@@ -43,8 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/investor-logout', [InvestorLoginAPIController::class, 'logout']);
 });
 
-Route::get('/investors', [InvestorsAPIController::class, 'index']);
-Route::get('/founders', [FoundersAPIController::class, 'index']);
+//professional routes
+Route::post('/register-professional', [ProfessionalAPIController::class, 'professionalRegistration']);
 
 //enum routes
 Route::prefix('enums')->group(function () {
@@ -59,4 +62,11 @@ Route::prefix('enums')->group(function () {
     Route::get('/co-investings', [EnumAPIController::class, 'getCoInvestings']);
     Route::get('/convenient-investments', [EnumAPIController::class, 'getConvenientInvestments']);
     Route::get('/enterprise-levels', [EnumAPIController::class, 'getEnterpriseLevels']);
+    Route::get('/skill-importance-options', [EnumAPIController::class, 'getSkillImportance']);
+    Route::get('/membership-benefits', [EnumAPIController::class, 'getMembershipBenefits']);
+    Route::get('/collaboration-types', [EnumAPIController::class, 'getCollaborationTypes']);
+    Route::get('/aspirations', [EnumAPIController::class, 'getAspirations']);
+    Route::get('/goals', [EnumAPIController::class, 'getGoals']);
+    Route::get('/motivations', [EnumAPIController::class, 'getMotivation']);
+    Route::get('/enhancing-credibility', [EnumAPIController::class, 'getEnhancingCredibility']);
 });
