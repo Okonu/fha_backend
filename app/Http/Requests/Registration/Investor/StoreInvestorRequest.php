@@ -3,11 +3,13 @@
 namespace App\Http\Requests\Registration\Investor;
 
 use App\Enums\CoInvesting;
+use App\Enums\ConvenientInvestment;
 use App\Enums\EnterpriseLevel;
 use App\Enums\InvestorFocusArea;
 use App\Enums\SocialEnvironmentaImpact;
 use App\Enums\ViabilityCriteria;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreInvestorRequest extends FormRequest
 {
@@ -29,12 +31,12 @@ class StoreInvestorRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email|string|max:255|unique:investors,email',
-            'enterprise_level' => 'required|string|max:255',
-            'co_investing' => 'required|string|max:255',
-            'convenient_investing' => 'required|string|max:255',
-            'focus_area' => 'required|string|max:255',
-            'impact' => 'required|string|max:255',
-            'viability' =>  'required|string|max:255',
+            'enterprise_level' => ['required', 'string', new Enum(EnterpriseLevel::class)],
+            'co_investing' => ['required','string', new Enum(CoInvesting::class)],
+            'convenient_investing' => ['required', 'string', new Enum(ConvenientInvestment::class)],
+            'focus_area' => ['required', 'string', new Enum(InvestorFocusArea::class) ],
+            'impact' => ['required', 'string', new Enum(SocialEnvironmentaImpact::class) ],
+            'viability' =>  ['required', 'string', new Enum(ViabilityCriteria::class) ],
             'expectation' => 'required|string|max:255',
             'concern' => 'required|string|max:255',
         ];
