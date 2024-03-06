@@ -6,7 +6,7 @@ use App\Enums\CoInvesting;
 use App\Enums\ConvenientInvestment;
 use App\Enums\EnterpriseLevel;
 use App\Enums\InvestorFocusArea;
-use App\Enums\SocialEnvironmentaImpact;
+use App\Enums\SocialEnvironmentImpact;
 use App\Enums\ViabilityCriteria;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Enum;
@@ -35,7 +35,7 @@ class StoreInvestorRequest extends FormRequest
             'co_investing' => ['required','string', new Enum(CoInvesting::class)],
             'convenient_investing' => ['required', 'string', new Enum(ConvenientInvestment::class)],
             'focus_area' => ['required', 'string', new Enum(InvestorFocusArea::class) ],
-            'impact' => ['required', 'string', new Enum(SocialEnvironmentaImpact::class) ],
+            'impact' => ['required', 'string', new Enum(SocialEnvironmentImpact::class) ],
             'viability' =>  ['required', 'string', new Enum(ViabilityCriteria::class) ],
             'expectation' => 'required|string|max:255',
             'concern' => 'required|string|max:255',
