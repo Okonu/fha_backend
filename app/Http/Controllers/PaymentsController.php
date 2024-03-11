@@ -44,7 +44,7 @@ class PaymentsController extends Controller
         $payment->status = 'pending';
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $request->input('amount') ,$channelCode,$kittyId, $request->input('phone_number'), $request->input('email'));
+        $this->sendPaymentRequestToGateway($externalRef, $request->input('amount') ,$channelCode,$kittyId, $request->input('phone_number'));
 
         return response()->json([
             'message' => 'Payment initated successfully',
