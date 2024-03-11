@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use App\Services\RegistrationEmailService;
@@ -114,10 +115,11 @@ class PaymentsController extends Controller
 
     public function showPaymentForm(Request $request)
     {
-
-        $user = $request->query('user');
+        $userId = $request->query('user');
+        $user = User::find($userId);
 
         return view('payments.payment_form', compact('user'));
     }
+
 
 }
