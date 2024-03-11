@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complete Your Payment</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* loader and notification transition */
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+        }
+
+        #notification {
+            transition: opacity 1s ease-out;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -38,6 +55,11 @@
         </div>
     </div>
 
+    <!-- Loader Element -->
+    <div id="loader" class="flex items-center justify-center">
+        <div class="loader"></div>
+    </div>
+
     <!-- Notification Element -->
     <div id="notification" class="hidden fixed top-0 left-0 w-full h-full flex items-center justify-center bg-white z-50">
         <div class="bg-gray-800 text-white p-6 rounded-lg shadow-lg">
@@ -49,12 +71,23 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.querySelector('form');
             const notification = document.getElementById('notification');
+            const loader = document.getElementById('loader');
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                notification.classList.remove('hidden');
+                loader.style.display = 'flex';
 
-                window.location.href = 'https://www.foundershubafrica.com';
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                    notification.classList.remove('hidden');
+
+                    setTimeout(function() {
+                        notification.style.opacity = '0';
+                        setTimeout(function() {
+                            window.location.href = 'https://www.foundershubafrica.com';
+                        }, 1000);
+                    }, 10000);
+                }, 100);
             });
         });
     </script>
