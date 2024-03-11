@@ -13,6 +13,7 @@ class Payment extends Model
         'user_type',
         'user_id',
         'external_ref',
+        'channel_code',
         'amount',
         'status',
     ];
