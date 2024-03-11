@@ -31,7 +31,7 @@ class PaymentsController extends Controller
 
         $externalRef = Str::random(10);
 
-        $amount = 300;
+        $amount = 1;
         $kittyId = 50;
 
         $payment = new Payment;
@@ -61,8 +61,8 @@ class PaymentsController extends Controller
             "phone_number" => $phoneNumber,
             "channel_code" => 63902,
             "external_ref" => $externalRef,
-            "first_name" => "Ian",
-            "second_name" => "Okonu",
+            // "first_name" => " ",
+            // "second_name" => " ",
             "show_names" => true,
             "show_number" => true
         ];
