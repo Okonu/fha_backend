@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('user_type')->nullable();
+            $table->string('user_type');
             $table->foreignId('user_id');
             $table->string('external_ref')->unique();
             $table->decimal('amount', 8,2);

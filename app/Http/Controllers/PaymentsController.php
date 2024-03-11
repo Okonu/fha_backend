@@ -23,7 +23,7 @@ class PaymentsController extends Controller
         $request->validate([
             'phone_number' => 'required|string',
             'user_id' => 'required|exists:users,id',
-            // 'user_type' => 'required|string', 
+            'user_type' => 'required|string', 
             'email' => 'required|email',
         ]);
 
@@ -33,7 +33,7 @@ class PaymentsController extends Controller
         $kittyId = 50;
 
         $payment = new Payment;
-        // $payment->user_type = $request->input('user_type');
+        $payment->user_type = $request->input('user_type');
         $payment->user_id = $request->input('user_id');
         $payment->external_ref = $externalRef;
         $payment->amount = $amount;
