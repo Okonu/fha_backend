@@ -54,9 +54,7 @@
                 event.preventDefault();
                 notification.classList.remove('hidden');
 
-                setTimeout(function() {
-                    window.location.href = 'https://www.foundershubafrica.com';
-                }, 5000);
+                window.location.href = 'https://www.foundershubafrica.com';
             });
         });
     </script>
