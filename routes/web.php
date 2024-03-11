@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaymentsController;
 use Inertia\Inertia;
 
 /*
@@ -38,5 +39,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/preview-email', function () {
     return view('emails.registration');
 });
+
+Route::get('/payment-form', [PaymentsController::class, 'showPaymentForm'])->name('payment.form');
+Route::post('/payment-submit', [PaymentsController::class, 'initiatePayment'])->name('payment.submit');
 
 require __DIR__.'/auth.php';

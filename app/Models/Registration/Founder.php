@@ -18,4 +18,9 @@ class Founder extends Authenticatable
     {
         return $this->hasOne(FounderDetail::class);
     }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'user');
+    }
 }

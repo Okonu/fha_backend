@@ -13,7 +13,7 @@
 <body>
     <h1>{{ $subject }}</h1>
     <p>{{ $content }}</p>
-    <p>Thank you for registering. If you have any questions or need further assistance, please feel free to contact us.</p>
+    <p>If you have any questions or need further assistance, please feel free to contact us.</p>
     <p>Best regards,</p>
     <p>FHA Team</p>
 </body>

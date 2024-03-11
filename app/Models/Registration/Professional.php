@@ -15,4 +15,9 @@ class Professional extends Model
     {
         return $this->hasOne(ProfessionalDetail::class);
     }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'user');
+    }
 }

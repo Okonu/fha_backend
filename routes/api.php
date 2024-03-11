@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Registration\InvestorAPIController;
 use App\Http\Controllers\API\FoundersAPIController;
 use App\Http\Controllers\API\InvestorsAPIController;
 use App\Http\Controllers\API\EnumAPIController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\API\Registration\ProfessionalAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,3 +71,6 @@ Route::prefix('enums')->group(function () {
     Route::get('/motivations', [EnumAPIController::class, 'getMotivation']);
     Route::get('/enhancing-credibility', [EnumAPIController::class, 'getEnhancingCredibility']);
 });
+
+//payment callback
+Route::post('/payment-callback', [PaymentsController::class, 'handleCallback']);
