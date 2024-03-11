@@ -19,7 +19,7 @@
         }
 
         #notification {
-            transition: opacity 1s ease-out;
+            transition: opacity 3s ease-out;
         }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">

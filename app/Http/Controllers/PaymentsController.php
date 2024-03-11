@@ -32,7 +32,7 @@ class PaymentsController extends Controller
         $externalRef = Str::random(10);
 
         $amount = 1;
-        $kittyId = 50;
+        $kittyId = 1223;
 
         $payment = new Payment;
         $payment->user_type = $request->input('user_type');
