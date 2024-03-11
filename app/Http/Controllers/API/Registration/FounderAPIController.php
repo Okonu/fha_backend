@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Registration;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Http\Requests\Registration\Founder\StoreFounderRequest;
 use App\Models\Registration\Founder;
 use App\Models\Registration\FounderDetail;
@@ -42,7 +43,11 @@ class FounderAPIController extends Controller
             'community_support' => $request->input('community_support'),
         ]);
 
-        $paymentLink = route('payment.form', ['user' => $founder]);
+        $identifier = Str::random(32);
+
+        $founder = Founder::create(array_merge($validatedData, ['identifier' => $identifier]));
+
+        $paymentLink = route('payment.form', ['user' => $identifier]);
 
         $content = "Thank you for registering as a Founder. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
 
