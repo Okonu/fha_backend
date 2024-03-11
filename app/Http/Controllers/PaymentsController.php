@@ -27,13 +27,11 @@ class PaymentsController extends Controller
             'user_id' => 'required|exists:users,id',
             'user_type' => 'required|string',
             'email' => 'required|email',
-            'amount' => 'required|integer',
-            'channel_code' => 'required|integer',
         ]);
 
         $externalRef = Str::random(10);
 
-        $amount = $request->input('amount');
+        $amount = 1;
         $kittyId = 1223;
 
         $payment = new Payment;
@@ -44,17 +42,15 @@ class PaymentsController extends Controller
         $payment->status = 'pending';
         $payment->save();
 
-        $channelCode = $request->input('channel_code');
-
-        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'), $channelCode);
+        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'));
 
         return response()->json([
-            'message' => 'Payment initiated successfully',
+            'message' => 'Payment initated successfully',
             'payment' => $payment,
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $email, $channelCode)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $email)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -63,8 +59,10 @@ class PaymentsController extends Controller
             "amount" => $amount,
             "kitty_id" => $kittyId,
             "phone_number" => $phoneNumber,
-            "channel_code" => $channelCode,
+            "channel_code" => 63902,
             "external_ref" => $externalRef,
+            // "first_name" => " ",
+            // "second_name" => " ",
             "show_names" => true,
             "show_number" => true
         ];
@@ -73,7 +71,6 @@ class PaymentsController extends Controller
             'Content-Type' => 'application/json',
         ])->post($baseUrl . $endpoint, $payload);
     }
-
 
     private function sendSuccessEmail($email)
     {

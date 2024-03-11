@@ -21,22 +21,6 @@
         #notification {
             transition: opacity 3s ease-out;
         }
-
-                /* Card styling */
-                .card {
-            border: 2px solid #E5E7EB;
-            border-radius: 0.375rem;
-            padding: 1rem;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-        .card:hover {
-            border-color: #1D4ED8;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-        .card input[type="radio"]:checked + div {
-            background-color: #1D4ED8;
-            color: white;
-        }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
@@ -59,53 +43,6 @@
                         <div class="mb-4">
                             <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
                             <input type="text" name="phone_number" id="phone_number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                            <input type="number" name="amount" id="amount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700">Payment Method</label>
-                            <div class="grid grid-cols-2 gap-4">
-
-                                <!-- Mpesa Card -->
-                                <label class="card cursor-pointer" for="channel_code_mpesa">
-                                    <input type="radio" name="channel_code" id="channel_code_mpesa" value="63902" class="hidden">
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold">Mpesa</h3>
-                                        <p class="text-gray-500">Pay with Mpesa</p>
-                                    </div>
-                                </label>
-
-                                <!-- Sasa Pay -->
-                                <label class="card cursor-pointer" for="channel_code_sasa">
-                                    <input type="radio" name="channel_code" id="channel_code_sasa" value="0" class="hidden">
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold">Sasa Pay</h3>
-                                        <p class="text-gray-500">Pay with Sasa Pay</p>
-                                    </div>
-                                </label>
-
-                                <!-- Visa Card -->
-                                <label class="card cursor-pointer" for="channel_code_visa">
-                                    <input type="radio" name="channel_code" id="channel_code_visa" value="55" class="hidden">
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold">Visa</h3>
-                                        <p class="text-gray-500">Pay with Visa</p>
-                                    </div>
-                                </label>
-
-                                <!-- Airtel Money -->
-                                <label class="card cursor-pointer" for="channel_code_airtel">
-                                    <input type="radio" name="channel_code" id="channel_code_airtel" value="63903" class="hidden">
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold">Airtel</h3>
-                                        <p class="text-gray-500">Pay with Airtel- Money</p>
-                                    </div>
-                                </label>
-                            </div>
                         </div>
 
                         <div class="mt-6">
