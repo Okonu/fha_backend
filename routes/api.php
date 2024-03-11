@@ -74,3 +74,5 @@ Route::prefix('enums')->group(function () {
 
 //payment callback
 Route::post('/payment-callback', [PaymentsController::class, 'handleCallback']);
+
+Route::post('/payment-submit', [PaymentsController::class, 'initiatePayment'])->name('payment.submit');

@@ -32,6 +32,7 @@ class PaymentsController extends Controller
         ]);
 
         $externalRef = Str::random(10);
+        $amount = 1;
         $channelCode = 63902;
         $kittyId = 1223;
 
@@ -39,12 +40,12 @@ class PaymentsController extends Controller
         $payment->user_type = $request->input('user_type');
         $payment->user_id = $request->input('user_id');
         $payment->external_ref = $externalRef;
-        $payment->amount = $request->input('amount');
+        $payment->amount = $amount;
         $payment->channel_code = $channelCode;
         $payment->status = 'pending';
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $request->input('amount') ,$channelCode,$kittyId, $request->input('phone_number'));
+        $this->sendPaymentRequestToGateway($externalRef, $amount ,$channelCode,$kittyId, $request->input('phone_number'));
 
         return response()->json([
             'message' => 'Payment initated successfully',
