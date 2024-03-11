@@ -10,7 +10,7 @@
                         <p class="mt-1 text-sm text-gray-500">Please enter your phone number to complete the payment.</p>
                     </div>
                     <div class="mt-8">
-                        <form action="{{ route('payment.initiate') }}" method="POST">
+                        <form action="{{ route('payment.submit') }}" method="POST">
                             @csrf
 
                             <input type="hidden" name="user_id" value="{{ $user->id }}">
