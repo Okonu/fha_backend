@@ -37,5 +37,28 @@
             </div>
         </div>
     </div>
+
+    <!-- Notification Element -->
+    <div id="notification" class="hidden fixed top-0 left-0 w-full h-full flex items-center justify-center bg-white z-50">
+        <div class="bg-gray-800 text-white p-6 rounded-lg shadow-lg">
+            <p>Please wait for the payment to process. You will receive a status update in your email.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const notification = document.getElementById('notification');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                notification.classList.remove('hidden');
+
+                setTimeout(function() {
+                    window.location.href = 'https://www.foundershubafrica.com';
+                }, 5000);
+            });
+        });
+    </script>
 </body>
 </html>
