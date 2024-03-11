@@ -22,6 +22,7 @@
             transition: opacity 1s ease-out;
         }
     </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
     <div class="relative py-3 sm:max-w-xl sm:mx-auto">
@@ -75,19 +76,34 @@
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
-                loader.style.display = 'flex';
 
-                setTimeout(function() {
-                    loader.style.display = 'none';
-                    notification.classList.remove('hidden');
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                })
+                .then(response => {
+                    loader.style.display = 'flex';
 
                     setTimeout(function() {
-                        notification.style.opacity = '0';
+                        loader.style.display = 'none';
+                        notification.classList.remove('hidden');
+
                         setTimeout(function() {
-                            window.location.href = 'https://www.foundershubafrica.com';
-                        }, 1000);
-                    }, 10000);
-                }, 100);
+                            notification.style.opacity = '0';
+                            setTimeout(function() {
+                                window.location.href = 'https://www.foundershubafrica.com';
+                            }, 1000);
+                        }, 10000);
+                    }, 100);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             });
         });
     </script>
