@@ -12,7 +12,7 @@
                     <div class="mt-8">
                         <form action="{{ route('payment.submit') }}" method="POST">
                             @csrf
-                            <input type="hidden" name="name" value="{{ $user->name }}">
+                            <input type="hidden" name="user_id" value="{{ $user->name }}">
                             <input type="hidden" name="email" value="{{ $user->email }}">
 
                             <div class="mb-4">

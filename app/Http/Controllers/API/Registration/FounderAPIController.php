@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Registration;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
 use App\Http\Requests\Registration\Founder\StoreFounderRequest;
 use App\Models\Registration\Founder;
 use App\Models\Registration\FounderDetail;
@@ -42,10 +41,6 @@ class FounderAPIController extends Controller
             'partnership' => $request->input('partnership'),
             'community_support' => $request->input('community_support'),
         ]);
-
-        // $identifier = Str::random(32);
-
-        // $founder = Founder::create(array_merge($validatedData, ['identifier' => $identifier]));
 
         $paymentLink = route('payment.form', ['user' => $founder]);
 
