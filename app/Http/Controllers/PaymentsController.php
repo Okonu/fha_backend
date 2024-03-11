@@ -25,15 +25,13 @@ class PaymentsController extends Controller
         $request->validate([
             'phone_number' => 'required|string',
             'user_id' => 'required|exists:users,id',
-            // "channel_code" => "required|integer",
-            "amount" => "required|integer",
             'user_type' => 'required|string',
             'email' => 'required|email',
         ]);
 
         $externalRef = Str::random(10);
+
         $amount = 1;
-        $channelCode = 63902;
         $kittyId = 1223;
 
         $payment = new Payment;
@@ -41,11 +39,10 @@ class PaymentsController extends Controller
         $payment->user_id = $request->input('user_id');
         $payment->external_ref = $externalRef;
         $payment->amount = $amount;
-        $payment->channel_code = $channelCode;
         $payment->status = 'pending';
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $amount ,$channelCode,$kittyId, $request->input('phone_number'));
+        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'));
 
         return response()->json([
             'message' => 'Payment initated successfully',
@@ -53,7 +50,7 @@ class PaymentsController extends Controller
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $channelCode, $kittyId, $phoneNumber)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $email)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -62,8 +59,10 @@ class PaymentsController extends Controller
             "amount" => $amount,
             "kitty_id" => $kittyId,
             "phone_number" => $phoneNumber,
-            "channel_code" => $channelCode,
+            "channel_code" => 63902,
             "external_ref" => $externalRef,
+            // "first_name" => " ",
+            // "second_name" => " ",
             "show_names" => true,
             "show_number" => true
         ];
@@ -87,51 +86,38 @@ class PaymentsController extends Controller
 
     public function handleCallback(Request $request)
     {
-        $requestReference = $request->input('request_reference');
-
-        $payment = Payment::where('external_ref', $requestReference)->first();
+        $externalRef = $request->input('external_ref');
+        $payment = Payment::where('external_ref', $externalRef)->first();
 
         if ($payment) {
-            $resultCode = $request->input('result_code');
-            if ($resultCode === '0') {
-                $payment->status = 'completed';
-            } elseif ($resultCode === '01') {
-                $payment->status = 'failed';
-            } else {
-                $payment->status = 'unknown';
-            }
+            $payment->status = $request->input('status');
             $payment->save();
 
-            Log::info('Payment callback received', [
-                'external_ref' => $requestReference,
-                'status' => $payment->status,
-                'result_code' => $resultCode,
-                'result_desc' => $request->input('result_desc'),
-            ]);
+            Log::info('Payment callback received', $request->all());
 
             if ($payment->status === 'completed') {
                 $this->sendSuccessEmail($payment->user->email);
+            } elseif ($payment->status === 'canceled') {
+                $this->sendFailureEmail($payment->user->email, 'Payment was canceled.');
             } else {
-                $this->sendFailureEmail($payment->user->email, $request->input('result_desc'));
+                $this->sendFailureEmail($payment->user->email, $request->input('error_message'));
             }
 
             return response()->json(['message' => 'Payment status updated successfully']);
 
         } else {
-            Log::warning('Payment not found for request_reference', ['request_reference' => $requestReference]);
             return response()->json(['message' => 'Payment not found'], 404);
         }
     }
+
 
     public function showPaymentForm(Request $request)
     {
         $userId = $request->query('user');
         $user = User::find($userId);
 
-        if ($user) {
-            return view('payments.payment_form', compact('user'));
-        } else {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+        return view('payments.payment_form', compact('user'));
     }
+
+
 }

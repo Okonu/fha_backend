@@ -47,16 +47,16 @@ class ProfessionalAPIController extends Controller
 
         $paymentLink = route('payment.form', ['user' => $professional->id, 'user_type' => 'professional']);
 
-        $content = "Please complete your registration by clicking the following link: " . $paymentLink;
+        $content = "Thank you for registering as a Professional. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
 
         $this->registrationEmailService->sendEmail(
             $request->input('email'),
-            'Follow the link to complete registration',
+            'Registration complete',
             $content
         );
 
         return response()->json([
-            'message' => 'Expression of interest sent, next steps as above.',
+            'message' => 'Registration complete. PLease check your email for the next steps.',
             'professional' => $professional,
             'professionalDetail' => $professionalDetail,
         ]);

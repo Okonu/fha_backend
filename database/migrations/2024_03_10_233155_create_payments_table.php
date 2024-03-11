@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('external_ref')->unique();
             $table->decimal('amount', 8,2);
-            $table->integer('channel_code')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });
