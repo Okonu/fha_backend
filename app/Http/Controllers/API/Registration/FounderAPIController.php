@@ -49,7 +49,7 @@ class FounderAPIController extends Controller
 
         $paymentLink = route('payment.form', ['user' => $identifier]);
 
-        $content = "Thank you for registering as a Founder. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
+        $content = "Thank you for registering as a Founder. Please complete your registration by clicking the following link: " . $paymentLink;
 
         $this->registrationEmailService->sendEmail(
             $request->input('email'),
