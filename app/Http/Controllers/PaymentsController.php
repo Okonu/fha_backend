@@ -51,7 +51,7 @@ class PaymentsController extends Controller
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $channel_code, $kittyId, $phoneNumber, $email)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $channel_code, $kittyId, $phoneNumber)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -120,7 +120,6 @@ class PaymentsController extends Controller
             return response()->json(['message' => 'Payment not found'], 404);
         }
     }
-
 
     public function showPaymentForm(Request $request)
     {

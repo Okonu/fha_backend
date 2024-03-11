@@ -79,6 +79,15 @@
                                     </div>
                                 </label>
 
+                                <!-- T-Kash -->
+                                <label class="card cursor-pointer" for="channel_code_tkash">
+                                    <input type="radio" name="channel_code" id="channel_code_tkash" value="63907" class="hidden">
+                                    <div class="p-4">
+                                        <h3 class="text-lg font-semibold">T-Kash</h3>
+                                        <p class="text-gray-500">Pay with T-Kash</p>
+                                    </div>
+                                </label>
+
                                 <!-- Sasa Pay -->
                                 <label class="card cursor-pointer" for="channel_code_sasa">
                                     <input type="radio" name="channel_code" id="channel_code_sasa" value="0" class="hidden">
@@ -165,7 +174,7 @@
                     }, 100);
                 })
                 .catch(error => {
-                    console.error('Error:', error);\
+                    console.error('Error:', error);
                 });
             });
         });
