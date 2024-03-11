@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title', 'Default Title')</title>
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
