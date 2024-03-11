@@ -42,7 +42,7 @@ class FounderAPIController extends Controller
             'community_support' => $request->input('community_support'),
         ]);
 
-        $paymentLink = route('payment.form', ['user' => $founder]);
+        $paymentLink = route('payment.form', ['user' => $founder->id, 'user_type' => 'founder']);
 
         $content = "Thank you for registering as a Founder. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
 

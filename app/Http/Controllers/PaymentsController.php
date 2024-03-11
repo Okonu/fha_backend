@@ -7,6 +7,7 @@ use App\Models\Payment;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
 use App\Services\RegistrationEmailService;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PaymentsController extends Controller
@@ -23,7 +24,7 @@ class PaymentsController extends Controller
         $request->validate([
             'phone_number' => 'required|string',
             'user_id' => 'required|exists:users,id',
-            'user_type' => 'required|string', 
+            'user_type' => 'required|string',
             'email' => 'required|email',
         ]);
 
@@ -79,7 +80,7 @@ class PaymentsController extends Controller
     private function sendSuccessEmail($email)
     {
         $content = "Thank you for your contribution. Your payment was successful. Here's a link to share on WhatsApp: [Your WhatsApp Link]. Welcome to our community!";
-        $this->registrationEmailService->sendEmail($email, 'Payment Successful', $content); 
+        $this->registrationEmailService->sendEmail($email, 'Payment Successful', $content);
     }
 
     private function sendFailureEmail($email, $errorMessage)
