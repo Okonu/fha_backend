@@ -66,7 +66,7 @@
                             <input type="number" name="amount" id="amount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
                         </div>
 
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700">Payment Method</label>
                             <div class="grid grid-cols-2 gap-4">
 
@@ -76,15 +76,6 @@
                                     <div class="p-4">
                                         <h3 class="text-lg font-semibold">Mpesa</h3>
                                         <p class="text-gray-500">Pay with Mpesa</p>
-                                    </div>
-                                </label>
-
-                                <!-- T-Kash -->
-                                <label class="card cursor-pointer" for="channel_code_tkash">
-                                    <input type="radio" name="channel_code" id="channel_code_tkash" value="63907" class="hidden">
-                                    <div class="p-4">
-                                        <h3 class="text-lg font-semibold">T-Kash</h3>
-                                        <p class="text-gray-500">Pay with T-Kash</p>
                                     </div>
                                 </label>
 
@@ -115,7 +106,7 @@
                                     </div>
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="mt-6">
                             <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

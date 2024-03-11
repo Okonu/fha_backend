@@ -25,13 +25,14 @@ class PaymentsController extends Controller
         $request->validate([
             'phone_number' => 'required|string',
             'user_id' => 'required|exists:users,id',
-            "channel_code" => "required|integer",
+            // "channel_code" => "required|integer",
             "amount" => "required|integer",
             'user_type' => 'required|string',
             'email' => 'required|email',
         ]);
 
         $externalRef = Str::random(10);
+        $channelCode = 63902;
         $kittyId = 1223;
 
         $payment = new Payment;
@@ -39,11 +40,11 @@ class PaymentsController extends Controller
         $payment->user_id = $request->input('user_id');
         $payment->external_ref = $externalRef;
         $payment->amount = $request->input('amount');
-        $payment->channel_code = $request->input('channel_code');
+        $payment->channel_code = $channelCode;
         $payment->status = 'pending';
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $request->input('amount'), $request->input('channel_code'), $kittyId, $request->input('phone_number'), $request->input('email'));
+        $this->sendPaymentRequestToGateway($externalRef, $request->input('amount') ,$channelCode,$kittyId, $request->input('phone_number'), $request->input('email'));
 
         return response()->json([
             'message' => 'Payment initated successfully',
@@ -51,7 +52,7 @@ class PaymentsController extends Controller
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $channel_code, $kittyId, $phoneNumber)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $channelCode, $kittyId, $phoneNumber)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -60,7 +61,7 @@ class PaymentsController extends Controller
             "amount" => $amount,
             "kitty_id" => $kittyId,
             "phone_number" => $phoneNumber,
-            "channel_code" => $channel_code,
+            "channel_code" => $channelCode,
             "external_ref" => $externalRef,
             "show_names" => true,
             "show_number" => true
