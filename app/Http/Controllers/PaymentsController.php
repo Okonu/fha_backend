@@ -31,7 +31,7 @@ class PaymentsController extends Controller
 
         $externalRef = Str::random(10);
 
-        $amount = 1;
+        $amount = 500;
         $kittyId = 1223;
 
         $payment = new Payment;
