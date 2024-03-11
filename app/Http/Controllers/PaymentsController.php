@@ -111,17 +111,12 @@ class PaymentsController extends Controller
         }
     }
 
-    public function showPaymentForm($identifier)
+    public function showPaymentForm(Request $request)
     {
-        $user = Founder::where('identifier', $identifier)->first()
-            ?? Investor::where('identifier', $identifier)->first()
-            ?? Professional::where('identifier', $identifier)->first();
-    
-        if (!$user) {
-            return redirect()->back()->withErrors(['User not found']);
-        }
-    
+
+        $user = $request->query('user');
+
         return view('payments.payment_form', compact('user'));
     }
-    
+
 }
