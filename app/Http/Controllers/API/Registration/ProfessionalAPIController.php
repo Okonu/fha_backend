@@ -45,7 +45,10 @@ class ProfessionalAPIController extends Controller
             'goals' => $request->input('goals'),
         ]);
 
-        $content = "Thank you for registering as a Professional. PLease check the following steps";
+        $paymentLink = route('payment.form', ['user' => $professional->id, 'user_type' => 'professional']);
+
+        $content = "Thank you for registering as a Professional. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
+
         $this->registrationEmailService->sendEmail(
             $request->input('email'),
             'Registration complete',

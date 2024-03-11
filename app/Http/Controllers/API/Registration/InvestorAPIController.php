@@ -47,8 +47,10 @@ class InvestorAPIController extends Controller
             'expectation' => $request->input('expectation'),
             'concern' => $request->input('concern'),
         ]);
+        $paymentLink = route('payment.form', ['user' => $investor->id, 'user_type' => 'investor']);
 
-        $content = "Thank you fore registering as an investor. PLease check the following steps";
+        $content = "Thank you for registering as a Investor. 'Complete Your Registration', Please complete your registration by clicking the following link: " . $paymentLink;
+
         $this->sendRegistrationConfirmationEmail(
             $request->input('email'),
             'Registration Successful',

@@ -32,7 +32,7 @@ class PaymentsController extends Controller
         $externalRef = Str::random(10);
 
         $amount = 1;
-        $kittyId = 50;
+        $kittyId = 1223;
 
         $payment = new Payment;
         $payment->user_type = $request->input('user_type');
@@ -67,20 +67,14 @@ class PaymentsController extends Controller
             "show_number" => true
         ];
 
-        $response = Http::withHeaders([
+        Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->post($baseUrl . $endpoint, $payload);
-
-        if ($response->successful()) {
-            $this->sendSuccessEmail($email);
-        } else {
-            $this->sendFailureEmail($email, $response->body());
-        }
     }
 
     private function sendSuccessEmail($email)
     {
-        $content = "Thank you for your contribution. Your payment was successful. Here's a link to share on WhatsApp: [Your WhatsApp Link]. Welcome to our community!";
+        $content = "Thank you for your contribution. Your payment was successful. Here's a link to share on WhatsApp: [ WhatsApp Link]. Welcome to our community!";
         $this->registrationEmailService->sendEmail($email, 'Payment Successful', $content);
     }
 
@@ -103,15 +97,19 @@ class PaymentsController extends Controller
 
             if ($payment->status === 'completed') {
                 $this->sendSuccessEmail($payment->user->email);
+            } elseif ($payment->status === 'canceled') {
+                $this->sendFailureEmail($payment->user->email, 'Payment was canceled.');
             } else {
                 $this->sendFailureEmail($payment->user->email, $request->input('error_message'));
             }
 
             return response()->json(['message' => 'Payment status updated successfully']);
+
         } else {
             return response()->json(['message' => 'Payment not found'], 404);
         }
     }
+
 
     public function showPaymentForm(Request $request)
     {
