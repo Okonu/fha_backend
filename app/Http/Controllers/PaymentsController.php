@@ -74,7 +74,7 @@ class PaymentsController extends Controller
 
     private function sendSuccessEmail($email)
     {
-        $content = "Thank you for your contribution. Your payment was successful. Here's a link to share on WhatsApp: [ WhatsApp Link]. Welcome to our community!";
+        $content = "Thank you for your contribution. Your payment was successful. Here's a link to share on WhatsApp: https://chat.whatsapp.com/BQ1QSNPYpp90XZWP433Mez. Welcome to our community!";
         $this->registrationEmailService->sendEmail($email, 'Payment Successful', $content);
     }
 

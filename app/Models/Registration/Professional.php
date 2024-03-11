@@ -2,6 +2,7 @@
 
 namespace App\Models\Registration;
 
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
