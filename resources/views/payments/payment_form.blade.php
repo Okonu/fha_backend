@@ -21,6 +21,22 @@
         #notification {
             transition: opacity 3s ease-out;
         }
+
+                /* Card styling */
+                .card {
+            border: 2px solid #E5E7EB;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+        .card:hover {
+            border-color: #1D4ED8;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .card input[type="radio"]:checked + div {
+            background-color: #1D4ED8;
+            color: white;
+        }
     </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
