@@ -37,19 +37,4 @@ class Payment extends Model
 
         return 'unknown';
     }
-
-    public function founder()
-    {
-        return $this->belongsTo(Founder::class, 'user_id')->where('user_type', Founder::class);
-    }
-
-    public function investor()
-    {
-        return $this->belongsTo(Investor::class, 'user_id')->where('user_type', Investor::class);
-    }
-
-    public function professional()
-    {
-        return $this->belongsTo(Professional::class, 'user_id')->where('user_type', Professional::class);
-    }
 }
