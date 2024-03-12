@@ -51,7 +51,7 @@
                         </div>
 
                         <!-- Payment Options Section -->
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <h3 class="text-lg font-semibold text-gray-700">Payment Options</h3>
                             <div class="grid grid-cols-2 gap-4">
                                 <label class="block">
@@ -71,7 +71,7 @@
                                     <span class="text-sm">Sasa Pay</span>
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="mt-6">
                             <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">

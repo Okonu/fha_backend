@@ -30,14 +30,14 @@ class PaymentsController extends Controller
             'user_id' => 'required|exists:users,id',
             'user_type' => 'required|string',
             'email' => 'required|email',
-            'channel_code' => 'required|integer',
+            // 'channel_code' => 'required|integer',
         ]);
 
         $externalRef = Str::random(10);
 
         $amount = 500;
         $kittyId = 1223;
-        $channelCode = $request->input('channel_code');
+        // $channelCode = $request->input('channel_code');
 
         $payment = new Payment;
         $payment->user_type = $request->input('user_type');
@@ -45,10 +45,10 @@ class PaymentsController extends Controller
         $payment->external_ref = $externalRef;
         $payment->amount = $amount;
         $payment->status = 'pending';
-        $payment->channel_code = $channelCode;
+        // $payment->channel_code = $channelCode;
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'), $channelCode);
+        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'));
 
         return response()->json([
             'message' => 'Payment initated successfully',
@@ -56,7 +56,7 @@ class PaymentsController extends Controller
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $channelCode)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -65,7 +65,7 @@ class PaymentsController extends Controller
             "amount" => $amount,
             "kitty_id" => $kittyId,
             "phone_number" => $phoneNumber,
-            "channel_code" => $channelCode,
+            "channel_code" => 63902,
             "external_ref" => $externalRef,
             // "first_name" => " ",
             // "second_name" => " ",
