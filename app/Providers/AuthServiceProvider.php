@@ -4,14 +4,8 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Models\Registration\Founder;
-use App\Models\Registration\Investor;
-use App\Models\Registration\Professional;
 use App\Models\User;
-use App\Policies\FounderPolicy;
-use App\Policies\InvestorPolicy;
 use App\Policies\PermissionPolicy;
-use App\Policies\ProfessionalPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -30,9 +24,6 @@ class AuthServiceProvider extends ServiceProvider
         Role::class => RolePolicy::class,
         User::class => UserPolicy::class,
         Permission::class =>PermissionPolicy::class,
-        Founder::class => FounderPolicy::class,
-        Professional::class =>ProfessionalPolicy::class,
-        Investor::class =>InvestorPolicy::class,
     ];
 
     /**
