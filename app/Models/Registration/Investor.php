@@ -19,8 +19,9 @@ class Investor extends Authenticatable
         return $this->hasOne(InvestorDetail::class);
     }
 
-    public function payments()
+    public function payment()
     {
         return $this->morphMany(Payment::class, 'user');
     }
+
 }
