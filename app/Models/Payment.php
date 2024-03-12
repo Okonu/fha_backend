@@ -24,17 +24,20 @@ class Payment extends Model
     {
         return $this->morphTo();
     }
-
     public function getUserTypeNameAttribute()
     {
-        if($this->user_type === 'founder') {
-            return $this->user->name;
-        } elseif ($this->user_type === 'investor') {
-            return $this->user->name;
-        } elseif ($this->user_type === 'professional') {
-            return $this->user->name;
+        switch ($this->user_type) {
+            case Founder::class:
+                $user = Founder::find($this->user_id);
+                return $user ? $user->name : 'Unknown';
+            case Investor::class:
+                $user = Investor::find($this->user_id);
+                return $user ? $user->name : 'Unknown';
+            case Professional::class:
+                $user = Professional::find($this->user_id);
+                return $user ? $user->name : 'Unknown';
+            default:
+                return 'Unknown';
         }
-
-        return 'unknown';
     }
 }
