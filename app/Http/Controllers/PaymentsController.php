@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Models\Registration\Founder;
+use App\Models\Registration\Investor;
+use App\Models\Registration\Professional;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
@@ -114,15 +117,29 @@ class PaymentsController extends Controller
     public function showPaymentForm(Request $request)
     {
         $userId = $request->query('user');
-        $user = User::find($userId);
+        // $user = User::find($userId);
+        $userType = $request->query('user_type');
 
-        dd($user);
+        switch ($userType) {
+            case 'founder':
+                $user = Founder::find($userId);
+                break;
+            case 'professional':
+                $user = Professional::find($userId);
+                break;
+            case 'investor':
+                $user = Investor::find($userId);
+                break;
+            default:
+                return response()->json(['message' => 'Unknown user type'], 400);
+        }
 
-        if ($user) {
-            return view('payments.payment_form', compact('user'));
-        } else {
+        if(!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+
+        return view('payments.payment_form', compact('user'));
+
     }
 
 
