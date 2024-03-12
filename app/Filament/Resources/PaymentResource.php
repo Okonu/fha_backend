@@ -50,29 +50,6 @@ class PaymentResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->query(function (Builder $query) {
-            return $query
-                ->leftJoin('founders', function ($join) {
-                    $join->on('payments.user_id', '=', 'founders.id')
-                         ->where('payments.user_type', Founder::class);
-                })
-                ->leftJoin('professionals', function ($join) {
-                    $join->on('payments.user_id', '=', 'professionals.id')
-                         ->where('payments.user_type', Professional::class);
-                })
-                ->leftJoin('investors', function ($join) {
-                    $join->on('payments.user_id', '=', 'investors.id')
-                         ->where('payments.user_type', Investor::class);
-                })
-                ->select('payments.*', 'founders.name as founder_name', 'professionals.name as professional_name', 'investors.name as investor_name');
-        })
-            // ->search(function (Builder $query, $search) {
-            //     $query->where(function ($query) use ($search) {
-            //         $query->where('founders.name', 'like', "%{$search}%")
-            //               ->orWhere('professionals.name', 'like', "%{$search}%")
-            //               ->orWhere('investors.name', 'like', "%{$search}%");
-            //     });
-            // })
             ->columns([
                 Tables\Columns\TextColumn::make('user_type')
                     ->searchable(),
