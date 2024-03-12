@@ -36,7 +36,12 @@
                     <form action="{{ route('payment.submit') }}" method="POST">
                         @csrf
 
-                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                        @if($user)
+                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                        @else
+                            <p>User not found.</p>
+                        @endif
+
                         <input type="hidden" name="user_type" value="{{ request()->query('user_type') }}">
                         <input type="hidden" name="email" value="{{ $user->email }}">
 

@@ -116,8 +116,15 @@ class PaymentsController extends Controller
         $userId = $request->query('user');
         $user = User::find($userId);
 
-        return view('payments.payment_form', compact('user'));
+        dd($user);
+
+        if ($user) {
+            return view('payments.payment_form', compact('user'));
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
+
 
 
 }
