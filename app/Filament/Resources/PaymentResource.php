@@ -66,13 +66,13 @@ class PaymentResource extends Resource
                 })
                 ->select('payments.*', 'founders.name as founder_name', 'professionals.name as professional_name', 'investors.name as investor_name');
         })
-            ->search(function (Builder $query, $search) {
-                $query->where(function ($query) use ($search) {
-                    $query->where('founders.name', 'like', "%{$search}%")
-                          ->orWhere('professionals.name', 'like', "%{$search}%")
-                          ->orWhere('investors.name', 'like', "%{$search}%");
-                });
-            })
+            // ->search(function (Builder $query, $search) {
+            //     $query->where(function ($query) use ($search) {
+            //         $query->where('founders.name', 'like', "%{$search}%")
+            //               ->orWhere('professionals.name', 'like', "%{$search}%")
+            //               ->orWhere('investors.name', 'like', "%{$search}%");
+            //     });
+            // })
             ->columns([
                 Tables\Columns\TextColumn::make('user_type')
                     ->searchable(),
