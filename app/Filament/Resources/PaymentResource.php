@@ -26,9 +26,10 @@ class PaymentResource extends Resource
                 Forms\Components\TextInput::make('user_type')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('user_id.name')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\TextInput::make('user_id')
+                    ->label('Name')
+                    ->numeric()
+                    ->required(),
                 Forms\Components\TextInput::make('external_ref')
                     ->required()
                     ->maxLength(255),
@@ -77,7 +78,7 @@ class PaymentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -97,9 +98,9 @@ class PaymentResource extends Resource
     {
         return [
             'index' => Pages\ListPayments::route('/'),
-            'create' => Pages\CreatePayment::route('/create'),
+            // 'create' => Pages\CreatePayment::route('/create'),
             'view' => Pages\ViewPayment::route('/{record}'),
-            'edit' => Pages\EditPayment::route('/{record}/edit'),
+            // 'edit' => Pages\EditPayment::route('/{record}/edit'),
         ];
     }
 }

@@ -14,10 +14,12 @@ class ProfessionalFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            // 'otp' => $this->faker->randomNumber(5),
         ];
     }
 }

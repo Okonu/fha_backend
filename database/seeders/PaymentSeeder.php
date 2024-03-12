@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Registration\Founder;
+use App\Models\Payment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class FounderSeeder extends Seeder
+class PaymentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Founder::factory(10)->create();
+        Payment::factory(10)->create();
     }
 }

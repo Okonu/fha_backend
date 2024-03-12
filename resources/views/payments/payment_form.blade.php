@@ -29,7 +29,7 @@
         <div class="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
             <div class="max-w-md mx-auto">
                 <div class="text-center">
-                    <h2 class="text-2xl font-bold text-gray-900">Complete Your Payment</h2>
+                    <h2 class="text-2xl font-bold text-gray-900">Complete Your Payment For Registration</h2>
                     <p class="mt-1 text-sm text-gray-500">Please enter your phone number to complete the payment.</p>
                 </div>
                 <div class="mt-8">
@@ -48,6 +48,29 @@
                         <div class="mb-4">
                             <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
                             <input type="text" name="phone_number" id="phone_number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                        </div>
+
+                        <!-- Payment Options Section -->
+                        <div class="mb-4">
+                            <h3 class="text-lg font-semibold text-gray-700">Payment Options</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <label class="block">
+                                    <input type="radio" name="channel_code" value="63902" class="mr-2 leading-tight">
+                                    <span class="text-sm">Mpesa</span>
+                                </label>
+                                <label class="block">
+                                    <input type="radio" name="channel_code" value="63903" class="mr-2 leading-tight">
+                                    <span class="text-sm">Airtel</span>
+                                </label>
+                                <label class="block">
+                                    <input type="radio" name="channel_code" value="55" class="mr-2 leading-tight">
+                                    <span class="text-sm">Visa</span>
+                                </label>
+                                <label class="block">
+                                    <input type="radio" name="channel_code" value="0" class="mr-2 leading-tight">
+                                    <span class="text-sm">Sasa Pay</span>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="mt-6">
@@ -83,6 +106,11 @@
                 event.preventDefault();
 
                 const formData = new FormData(form);
+
+                // console.log(formData
+                // for (let [key, value] of formData.entries()) {
+                //     console.log(`${key}: ${value}`);
+                // }
 
                 fetch(form.action, {
                     method: 'POST',

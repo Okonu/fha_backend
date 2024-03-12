@@ -30,12 +30,14 @@ class PaymentsController extends Controller
             'user_id' => 'required|exists:users,id',
             'user_type' => 'required|string',
             'email' => 'required|email',
+            'channel_code' => 'required|integer',
         ]);
 
         $externalRef = Str::random(10);
 
         $amount = 500;
         $kittyId = 1223;
+        $channelCode = $request->input('channel_code');
 
         $payment = new Payment;
         $payment->user_type = $request->input('user_type');
@@ -43,9 +45,10 @@ class PaymentsController extends Controller
         $payment->external_ref = $externalRef;
         $payment->amount = $amount;
         $payment->status = 'pending';
+        $payment->channel_code = $channelCode;
         $payment->save();
 
-        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'));
+        $this->sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $request->input('phone_number'), $request->input('email'), $channelCode);
 
         return response()->json([
             'message' => 'Payment initated successfully',
@@ -53,7 +56,7 @@ class PaymentsController extends Controller
         ]);
     }
 
-    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $email)
+    private function sendPaymentRequestToGateway($externalRef, $amount, $kittyId, $phoneNumber, $channelCode)
     {
         $baseUrl = 'https://apisalticon.onekitty.co.ke/';
         $endpoint = 'kitty/contribute_kitty/';
@@ -62,7 +65,7 @@ class PaymentsController extends Controller
             "amount" => $amount,
             "kitty_id" => $kittyId,
             "phone_number" => $phoneNumber,
-            "channel_code" => 63902,
+            "channel_code" => $channelCode,
             "external_ref" => $externalRef,
             // "first_name" => " ",
             // "second_name" => " ",
@@ -89,30 +92,37 @@ class PaymentsController extends Controller
 
     public function handleCallback(Request $request)
     {
-        $externalRef = $request->input('external_ref');
-        $payment = Payment::where('external_ref', $externalRef)->first();
+        $request->validate([
+            'amount' => 'required|numeric',
+            'result_code' => 'required|string',
+            'result_desc' => 'required|string',
+            'third_party_reference' => 'required|string',
+            'request_reference' => 'required|string',
+            'transaction_code' => 'required|string',
+            'channel_code' => 'required|integer',
+            'charges_total' => 'required|numeric',
+        ]);
 
-        if ($payment) {
-            $payment->status = $request->input('status');
-            $payment->save();
+        $payment = Payment::where('external_ref', $request->request_reference)->first();
 
-            Log::info('Payment callback received', $request->all());
-
-            if ($payment->status === 'completed') {
-                $this->sendSuccessEmail($payment->user->email);
-            } elseif ($payment->status === 'canceled') {
-                $this->sendFailureEmail($payment->user->email, 'Payment was canceled.');
-            } else {
-                $this->sendFailureEmail($payment->user->email, $request->input('error_message'));
-            }
-
-            return response()->json(['message' => 'Payment status updated successfully']);
-
-        } else {
+        if (!$payment) {
             return response()->json(['message' => 'Payment not found'], 404);
         }
-    }
 
+        $payment->status = $request->result_code === '0' ? 'success' : 'failed';
+        $payment->transaction_code = $request->transaction_code;
+        $payment->save();
+
+        Log::info('Payment callback received', $request->all());
+
+        if ($payment->status === 'success') {
+            $this->sendSuccessEmail($payment->user->email);
+        } else {
+            $this->sendFailureEmail($payment->user->email, $request->result_desc);
+        }
+
+        return response()->json(['message' => 'Payment callback processed successfully']);
+    }
 
     public function showPaymentForm(Request $request)
     {

@@ -17,6 +17,10 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             SuperAdminSeeder::class,
+            // FounderSeeder::class,
+            // InvestorSeeder::class,
+            // ProfessionalSeeder::class,
+            // PaymentSeeder::class,
         ]);
     }
 }
