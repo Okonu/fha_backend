@@ -135,13 +135,11 @@ class PaymentsController extends Controller
         }
 
         if(!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            abort(404);
         }
 
         return view('payments.payment_form', compact('user'));
 
     }
-
-
 
 }
