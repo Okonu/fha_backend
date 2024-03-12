@@ -40,7 +40,7 @@ Route::get('/preview-email', function () {
     return view('emails.registration');
 });
 
-Route::get('/payment/form/{user}', [PaymentsController::class, 'showPaymentForm'])->name('payment.form');
+Route::get('/payment-form/{user}', [PaymentsController::class, 'showPaymentForm'])->name('payment.form');
 Route::post('/payment-submit', [PaymentsController::class, 'initiatePayment'])->name('payment.submit');
 
 require __DIR__.'/auth.php';
