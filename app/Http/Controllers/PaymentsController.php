@@ -135,7 +135,7 @@ class PaymentsController extends Controller
         }
 
         if(!$user) {
-            abort(404);
+            return response()->view('errors.404', [], 404);
         }
 
         return view('payments.payment_form', compact('user'));
