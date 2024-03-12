@@ -21,7 +21,7 @@ class FounderPolicy
      */
     public function view(User $user, Founder $founder): bool
     {
-        return $user->hasRole('manager', 'admin');
+        return $user->hasAnyRole('manager', 'admin');
     }
 
 }

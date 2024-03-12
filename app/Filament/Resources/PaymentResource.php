@@ -50,8 +50,9 @@ class PaymentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user_type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('user_id.name')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('user_type_name')
+                    ->label('Name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('external_ref')
                     ->searchable(),

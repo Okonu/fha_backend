@@ -13,7 +13,7 @@ class InvestorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole('manager');
+        return $user->hasRole('admin', 'manager');
     }
 
     /**
@@ -21,7 +21,7 @@ class InvestorPolicy
      */
     public function view(User $user, Investor $investor): bool
     {
-        return $user->hasRole('manager');
+        return $user->hasRole('admin', 'manager');
     }
 
 }
