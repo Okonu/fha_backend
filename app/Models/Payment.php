@@ -11,10 +11,14 @@ class Payment extends Model
     protected $fillable = [
         'user_type',
         'user_id',
-        'external_ref',
+        'request_reference',
         'amount',
-        'status',
+        'result_code',
         'transaction_code',
+        'result_desc',
+        'third_party_reference', 
+        'channel_code',
+        'charges_total',
     ];
 
     public function user()

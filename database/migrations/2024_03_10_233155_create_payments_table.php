@@ -15,9 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('user_type');
             $table->foreignId('user_id');
-            $table->string('external_ref')->unique();
-            $table->decimal('amount', 8,2);
-            $table->string('status')->default('pending');
+            $table->string('request_reference')->unique(); 
+            $table->decimal('amount', 8, 2); 
+            $table->string('result_code')->default('pending'); 
+            $table->string('result_desc')->nullable(); 
+            $table->string('third_party_reference')->nullable(); 
+            $table->string('transaction_code')->nullable(); 
+            $table->integer('channel_code')->nullable();
+            $table->decimal('charges_total', 8, 2)->nullable(); 
             $table->timestamps();
         });
     }

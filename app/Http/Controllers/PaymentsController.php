@@ -95,35 +95,39 @@ class PaymentsController extends Controller
         $request->validate([
             'amount' => 'required|numeric',
             'result_code' => 'required|string',
-            'result_desc' => 'required|string',
-            'third_party_reference' => 'required|string',
-            'request_reference' => 'required|string',
+            'result_desc' => 'nullable|string',
+            'third_party_reference' => 'nullable|string',
+            'request_reference' => 'required|string|unique:payments,request_reference', 
             'transaction_code' => 'required|string',
-            'channel_code' => 'required|integer',
-            'charges_total' => 'required|numeric',
+            'channel_code' => 'nullable|integer',
+            'charges_total' => 'nullable|numeric',
         ]);
-
-        $payment = Payment::where('external_ref', $request->request_reference)->first();
-
+    
+        $payment = Payment::where('request_reference', $request->request_reference)->first();
+    
         if (!$payment) {
             return response()->json(['message' => 'Payment not found'], 404);
         }
-
+    
         $payment->status = $request->result_code === '0' ? 'success' : 'failed';
         $payment->transaction_code = $request->transaction_code;
+        $payment->result_desc = $request->result_desc; 
+        $payment->third_party_reference = $request->third_party_reference;
+        $payment->channel_code = $request->channel_code; 
+        $payment->charges_total = $request->charges_total; 
         $payment->save();
-
+    
         Log::info('Payment callback received', $request->all());
-
+    
         if ($payment->status === 'success') {
             $this->sendSuccessEmail($payment->user->email);
         } else {
             $this->sendFailureEmail($payment->user->email, $request->result_desc);
         }
-
+    
         return response()->json(['message' => 'Payment callback processed successfully']);
     }
-
+    
     public function showPaymentForm(Request $request)
     {
         $userId = $request->query('user');
