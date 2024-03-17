@@ -10,7 +10,7 @@ class Professional extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'otp', 'phone_number'];
 
     public function professionalDetail()
     {

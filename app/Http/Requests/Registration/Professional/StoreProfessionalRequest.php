@@ -43,6 +43,7 @@ class StoreProfessionalRequest extends FormRequest
             'contributions' => 'required|string|max:255',
             'skill_importance' => ['required', 'string', new Enum(SkillImportance::class)],
             'goals' => ['required', 'string', new Enum(Goals::class)],
+            'phone_number' => 'required|regex:/^(\+254)?(07|01)\d{8}$/',
         ];
     }
 }

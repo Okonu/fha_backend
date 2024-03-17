@@ -43,6 +43,7 @@ class ProfessionalAPIController extends Controller
             'contributions' => $request->input('contributions'),
             'skill_importance' => $request->input('skill_importance'),
             'goals' => $request->input('goals'),
+            'phone_number' => $request->input('phone_number'),
         ]);
 
         $paymentLink = route('payment.form', ['user' => $professional->id, 'user_type' => 'professional']);

@@ -40,6 +40,7 @@ class FounderAPIController extends Controller
             'funding_status' => $request->input('funding_status'),
             'partnership' => $request->input('partnership'),
             'community_support' => $request->input('community_support'),
+            'phone_number' => $request->input('phone_number'),
         ]);
 
         $paymentLink = route('payment.form', ['user' => $founder->id, 'user_type' => 'founder']);

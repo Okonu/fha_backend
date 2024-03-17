@@ -46,6 +46,7 @@ class InvestorAPIController extends Controller
             'viability' => $request->input('viability'),
             'expectation' => $request->input('expectation'),
             'concern' => $request->input('concern'),
+            'phone_number' => $request->input('phone_number'),
         ]);
         $paymentLink = route('payment.form', ['user' => $investor->id, 'user_type' => 'investor']);
 

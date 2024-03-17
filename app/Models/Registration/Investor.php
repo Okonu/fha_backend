@@ -12,7 +12,7 @@ class Investor extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable;
 
-    protected $fillable = ['name', 'email', 'otp'];
+    protected $fillable = ['name', 'email', 'otp', 'phone_number'];
 
     public function investorDetail()
     {

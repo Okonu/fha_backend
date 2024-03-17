@@ -39,6 +39,7 @@ class StoreInvestorRequest extends FormRequest
             'viability' =>  ['required', 'string', new Enum(ViabilityCriteria::class) ],
             'expectation' => 'required|string|max:255',
             'concern' => 'required|string|max:255',
+            'phone_number' => 'required|regex:/^(\+254)?(07|01)\d{8}$/',
         ];
     }
 }

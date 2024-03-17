@@ -38,6 +38,7 @@ class StoreFounderRequest extends FormRequest
             'funding_status' => ['required', 'string', new Enum(FundingStatus::class)],
             'partnership' => ['required', 'string', new Enum(PartneringOption::class)],
             'community_support' => 'required|string|max:255',
+            'phone_number' => 'required|regex:/^(\+254)?(07|01)\d{8}$/',
         ];
     }
 }
