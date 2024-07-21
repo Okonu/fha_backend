@@ -2,8 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\BlogController;
+use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 /*
@@ -44,3 +45,5 @@ use Inertia\Inertia;
 // Route::post('/payment-submit', [PaymentsController::class, 'initiatePayment'])->name('payment.submit');
 
 // require __DIR__.'/auth.php';
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+
