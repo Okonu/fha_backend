@@ -27,7 +27,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('')
             ->login()
-            // ->registration()
+             ->registration()
             ->passwordReset()
             ->emailVerification()
             // ->profile()

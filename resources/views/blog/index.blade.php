@@ -36,7 +36,7 @@
                         <h5>{{ $post->sub_title }}, <span class="w3-opacity">{{ $post->created_at->format('M d, Y') }}</span></h5>
                     </div>
                     <div class="w3-container">
-                        <p class="expandable">{{ $post->body }}</p>
+                        <div class="expandable">{!! $post->body !!}</div>
                         <div class="w3-row">
                             <div class="w3-col m8 s12">
                                 <p><button class="w3-button w3-padding-large w3-white w3-border read-more-btn"><b>READ MORE »</b></button></p>
@@ -101,13 +101,6 @@
 
     <!-- END w3-content -->
 </div>
-
-<!-- Footer -->
-{{--<footer class="w3-container w3-dark-grey w3-padding-32 w3-margin-top">--}}
-{{--    <button class="w3-button w3-black w3-disabled w3-padding-large w3-margin-bottom">Previous</button>--}}
-{{--    <button class="w3-button w3-black w3-padding-large w3-margin-bottom">Next »</button>--}}
-{{--    <p>Powered by <a href="" target="_blank">fha</a></p>--}}
-{{--</footer>--}}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

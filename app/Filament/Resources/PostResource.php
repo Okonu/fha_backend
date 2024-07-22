@@ -45,15 +45,15 @@ class PostResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('slug')
-                    ->required()
+                Forms\Components\TextInput::make('sub-title')
                     ->maxLength(255),
-                Forms\Components\Textarea::make('body')
+//                Forms\Components\TextInput::make('slug')
+//                    ->required()
+//                    ->maxLength(255),
+                Forms\Components\RichEditor::make('body')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('sub-title')
-                    ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
                     ->label('Image')
                     ->image(),
@@ -76,18 +76,9 @@ class PostResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sub-title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
