@@ -45,5 +45,5 @@ use Inertia\Inertia;
 // Route::post('/payment-submit', [PaymentsController::class, 'initiatePayment'])->name('payment.submit');
 
 // require __DIR__.'/auth.php';
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/', [BlogController::class, 'index'])->name('blog.index');
 
